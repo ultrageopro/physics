@@ -5,18 +5,22 @@ set_target_properties(core PROPERTIES
 )
 
 target_link_libraries(core PRIVATE physics)
+
 target_include_directories(core PRIVATE
-    ${pybind11_SOURCE_DIR}/include
     ${PROJECT_SOURCE_DIR}/include
+)
+
+install(TARGETS core
+    LIBRARY DESTINATION physics
+    ARCHIVE DESTINATION physics
 )
 
 add_custom_command(
     TARGET core
     POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E make_directory
-            ${PROJECT_SOURCE_DIR}/python/physics
-    COMMAND ${CMAKE_COMMAND} -E copy
-            $<TARGET_FILE:core>
-            ${PROJECT_SOURCE_DIR}/python/physics/
-    COMMENT "Copying Python module _core.so → python/physics/"
+    COMMAND ${CMAKE_COMMAND} -E env
+        PYTHONPATH=${PROJECT_SOURCE_DIR}/python
+        ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/python/scripts/generate_stubs.py
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+    COMMENT "Generating Python stub (_core.pyi)"
 )

@@ -76,7 +76,7 @@ constexpr Quantity<T1 - T2, L1 - L2, M1 - M2> operator/(const Quantity<T1, L1, M
 // Основные единицы измерения
 using Time = Quantity<1, 0, 0>;
 using Length = Quantity<0, 1, 0>;
-using Mass = Quantity<0, 0, 1>;
+using Weight = Quantity<0, 0, 1>;
 using Speed = Quantity<-1, 1, 0>;
 using Acceleration = Quantity<-2, 1, 0>;
 using Force = Quantity<-2, 1, 1>;
@@ -89,7 +89,7 @@ constexpr inline Time operator""_s(long double value) {
 constexpr inline Length operator""_m(long double value) {
   return {static_cast<double>(value)};
 };
-constexpr inline Mass operator""_kg(long double value) {
+constexpr inline Weight operator""_kg(long double value) {
   return {static_cast<double>(value)};
 };
 constexpr inline Speed operator""_ms(long double value) {

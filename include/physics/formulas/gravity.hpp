@@ -4,14 +4,14 @@
 
 namespace physics::gravity {
 
-units::Force GravitationalForce(units::Mass m1, units::Mass m2, units::Length distance);
+units::Force GravitationalForce(units::Weight m1, units::Weight m2, units::Length distance);
 
-units::Acceleration GravitationalAcceleration(units::Mass mass, units::Length radius);
+units::Acceleration GravitationalAcceleration(units::Weight mass, units::Length radius);
 
-units::Energy GravitationalPotentialEnergy(units::Mass m1, units::Mass m2, units::Length distance);
+units::Energy GravitationalPotentialEnergy(units::Weight m1, units::Weight m2, units::Length distance);
 
-units::Speed EscapeVelocity(units::Mass planet, units::Length radius);
+units::Speed EscapeVelocity(units::Weight planet, units::Length radius);
 
-units::Speed OrbitalVelocity(units::Mass planet, units::Length radius);
+units::Speed OrbitalVelocity(units::Weight planet, units::Length radius);
 
 }  // namespace physics::gravity

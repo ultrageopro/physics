@@ -19,7 +19,7 @@ vector::Vector<units::Force, 3> Object::Mass() const {
     return {units::Force{0}, units::Force{0}, units::Force{0}};
   }
 
-  units::Force n{mass.value * effective};
+  units::Force n{weight.value * effective};
   return {units::Force{0}, units::Force{0}, n};
 }
 
@@ -57,7 +57,7 @@ vector::Vector<units::Quantity<0, 0, 0>, 3> Object::DirectionTo(const Object& ot
 }
 
 units::Force Object::GravitationalForceMagnitude(const Object& other) const {
-  return gravity::GravitationalForce(mass, other.mass, DistanceTo(other));
+  return gravity::GravitationalForce(weight, other.weight, DistanceTo(other));
 }
 
 vector::Vector<units::Force, 3> Object::GravitationalForceVector(const Object& other) const {
@@ -75,7 +75,7 @@ vector::Vector<units::Force, 3> Object::GravitationalForceVector(const Object& o
 
 void Object::ApplyForce(const vector::Vector<units::Force, 3>& force) {
   for (std::size_t i = 0; i < 3; ++i) {
-    acceleration[i] = acceleration[i] + units::Acceleration{force[i].value / mass.value};
+    acceleration[i] = acceleration[i] + units::Acceleration{force[i].value / weight.value};
   }
 }
 

@@ -11,8 +11,8 @@ namespace pv = physics::vector;
 namespace pc = physics::constants;
 
 TEST(ObjectGravityTest, DistanceCorrect) {
-  po::Object a(pu::Mass{10.0}, pv::Vector<pu::Length, 3>{{pu::Length{0}, pu::Length{0}, pu::Length{0}}});
-  po::Object b(pu::Mass{20.0}, pv::Vector<pu::Length, 3>{{pu::Length{3.0}, pu::Length{4.0}, pu::Length{0}}});
+  po::Object a(pu::Weight{10.0}, pv::Vector<pu::Length, 3>{{pu::Length{0}, pu::Length{0}, pu::Length{0}}});
+  po::Object b(pu::Weight{20.0}, pv::Vector<pu::Length, 3>{{pu::Length{3.0}, pu::Length{4.0}, pu::Length{0}}});
 
   pu::Length dist = a.DistanceTo(b);
 
@@ -20,8 +20,8 @@ TEST(ObjectGravityTest, DistanceCorrect) {
 }
 
 TEST(ObjectGravityTest, DirectionCorrect) {
-  po::Object a(pu::Mass{10.0}, pv::Vector<pu::Length, 3>{{pu::Length{0}, pu::Length{0}, pu::Length{0}}});
-  po::Object b(pu::Mass{20.0}, pv::Vector<pu::Length, 3>{{pu::Length{3.0}, pu::Length{4.0}, pu::Length{0}}});
+  po::Object a(pu::Weight{10.0}, pv::Vector<pu::Length, 3>{{pu::Length{0}, pu::Length{0}, pu::Length{0}}});
+  po::Object b(pu::Weight{20.0}, pv::Vector<pu::Length, 3>{{pu::Length{3.0}, pu::Length{4.0}, pu::Length{0}}});
 
   auto dir = a.DirectionTo(b);
 
@@ -31,8 +31,8 @@ TEST(ObjectGravityTest, DirectionCorrect) {
 }
 
 TEST(ObjectGravityTest, GravitationalForceMagnitudeCorrect) {
-  po::Object a(pu::Mass{10.0}, pv::Vector<pu::Length, 3>{{pu::Length{0}, pu::Length{0}, pu::Length{0}}});
-  po::Object b(pu::Mass{20.0}, pv::Vector<pu::Length, 3>{{pu::Length{2.0}, pu::Length{0}, pu::Length{0}}});
+  po::Object a(pu::Weight{10.0}, pv::Vector<pu::Length, 3>{{pu::Length{0}, pu::Length{0}, pu::Length{0}}});
+  po::Object b(pu::Weight{20.0}, pv::Vector<pu::Length, 3>{{pu::Length{2.0}, pu::Length{0}, pu::Length{0}}});
 
   pu::Force force = a.GravitationalForceMagnitude(b);
 
@@ -42,8 +42,8 @@ TEST(ObjectGravityTest, GravitationalForceMagnitudeCorrect) {
 }
 
 TEST(ObjectGravityTest, GravitationalForceVectorCorrect) {
-  po::Object a(pu::Mass{10.0}, pv::Vector<pu::Length, 3>{{pu::Length{0}, pu::Length{0}, pu::Length{0}}});
-  po::Object b(pu::Mass{20.0}, pv::Vector<pu::Length, 3>{{pu::Length{2.0}, pu::Length{0}, pu::Length{0}}});
+  po::Object a(pu::Weight{10.0}, pv::Vector<pu::Length, 3>{{pu::Length{0}, pu::Length{0}, pu::Length{0}}});
+  po::Object b(pu::Weight{20.0}, pv::Vector<pu::Length, 3>{{pu::Length{2.0}, pu::Length{0}, pu::Length{0}}});
 
   auto fvec = a.GravitationalForceVector(b);
 

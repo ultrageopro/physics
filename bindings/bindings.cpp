@@ -9,6 +9,19 @@
 
 namespace py = pybind11;
 
+template <typename Q>
+void bind_quantity(py::module_ &m, const std::string &name) {
+  py::class_<Q>(m, name.c_str())
+      .def(py::init<double>())
+      .def_readwrite("value", &Q::value)
+      .def("__add__", [](const Q &a, const Q &b) { return a + b; })
+      .def("__sub__", [](const Q &a, const Q &b) { return a - b; })
+      .def("__mul__", [](const Q &a, double s) { return a * s; })
+      .def("__rmul__", [](double s, const Q &a) { return a * s; })
+      .def("__truediv__", [](const Q &a, double s) { return a / s; })
+      .def("__repr__", [name](const Q &q) { return name + "(" + std::to_string(q.value) + ")"; });
+}
+
 template <typename T, size_t N>
 void bind_vector(py::module_ &m, const std::string &name) {
   using Vec = physics::vector::Vector<T, N>;
@@ -59,27 +72,28 @@ void bind_quantities(py::module_ &m) {
       .def_readwrite("value", &physics::units::Quantity<0, 0, 0>::value)
       .def("__repr__", [](const physics::units::Quantity<0, 0, 0> &q) { return "Dimensionless(" + std::to_string(q.value) + ")"; });
 
-  py::class_<physics::units::Length>(m, "Length").def(py::init<double>()).def_readwrite("value", &physics::units::Length::value);
-  py::class_<physics::units::Mass>(m, "Mass").def(py::init<double>()).def_readwrite("value", &physics::units::Mass::value);
-  py::class_<physics::units::Speed>(m, "Speed").def(py::init<double>()).def_readwrite("value", &physics::units::Speed::value);
-  py::class_<physics::units::Acceleration>(m, "Acceleration").def(py::init<double>()).def_readwrite("value", &physics::units::Acceleration::value);
-  py::class_<physics::units::Force>(m, "Force").def(py::init<double>()).def_readwrite("value", &physics::units::Force::value);
-  py::class_<physics::units::Energy>(m, "Energy").def(py::init<double>()).def_readwrite("value", &physics::units::Energy::value);
+  bind_quantity<physics::units::Length>(m, "Length");
+  bind_quantity<physics::units::Weight>(m, "Mass");
+  bind_quantity<physics::units::Speed>(m, "Speed");
+  bind_quantity<physics::units::Acceleration>(m, "Acceleration");
+  bind_quantity<physics::units::Force>(m, "Force");
+  bind_quantity<physics::units::Energy>(m, "Energy");
 
   m.def("scalar", &physics::units::ScalarValue<double>, "Extract raw value");
 }
 
 void bind_object(py::module_ &m) {
   py::class_<physics::object::Object>(m, "Object")
-      .def(py::init<physics::units::Mass, physics::vector::Vector<physics::units::Length, 3>, physics::vector::Vector<physics::units::Speed, 3>,
+      .def(py::init<physics::units::Weight, physics::vector::Vector<physics::units::Length, 3>, physics::vector::Vector<physics::units::Speed, 3>,
                     physics::vector::Vector<physics::units::Acceleration, 3>>(),
            py::arg("mass"), py::arg("position") = physics::vector::Vector<physics::units::Length, 3>{},
            py::arg("speed") = physics::vector::Vector<physics::units::Speed, 3>{},
            py::arg("acceleration") = physics::vector::Vector<physics::units::Acceleration, 3>{})
-      .def_readwrite("mass", &physics::object::Object::mass)
+      .def_readwrite("weight", &physics::object::Object::weight)
       .def_readwrite("position", &physics::object::Object::position)
       .def_readwrite("speed", &physics::object::Object::speed)
       .def_readwrite("acceleration", &physics::object::Object::acceleration)
+      .def("mass", &physics::object::Object::Mass)
       .def("distance_to", &physics::object::Object::DistanceTo)
       .def("direction_to", &physics::object::Object::DirectionTo)
       .def("gravity_force", &physics::object::Object::GravitationalForceVector)

@@ -4,11 +4,11 @@
 
 namespace physics::mech {
 
-units::Energy KineticEnergy(units::Mass mass, units::Speed speed);
+units::Energy KineticEnergy(units::Weight mass, units::Speed speed);
 
-units::Energy PotentialEnergy(units::Mass mass, units::Acceleration g, units::Length height);
+units::Energy PotentialEnergy(units::Weight mass, units::Acceleration g, units::Length height);
 
-units::Force NewtonSecondLaw(units::Mass mass, units::Acceleration accel);
+units::Force NewtonSecondLaw(units::Weight mass, units::Acceleration accel);
 
 units::Speed AverageSpeed(units::Length distance, units::Time time);
 
@@ -16,7 +16,7 @@ units::Length UniformMotion(units::Length initial, units::Speed speed, units::Ti
 
 units::Length AcceleratedMotion(units::Length initial, units::Speed v0, units::Acceleration a, units::Time t);
 
-units::Quantity<0, 1, 1> Momentum(units::Mass mass, units::Speed speed);
+units::Quantity<0, 1, 1> Momentum(units::Weight mass, units::Speed speed);
 
 units::Energy Work(units::Force force, units::Length displacement);
 

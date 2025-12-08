@@ -2,15 +2,15 @@
 
 namespace physics::mech {
 
-units::Energy KineticEnergy(units::Mass mass, units::Speed speed) {
+units::Energy KineticEnergy(units::Weight mass, units::Speed speed) {
   return mass * speed * speed / 2.0;
 }
 
-units::Energy PotentialEnergy(units::Mass mass, units::Acceleration g, units::Length height) {
+units::Energy PotentialEnergy(units::Weight mass, units::Acceleration g, units::Length height) {
   return mass * g * height;
 }
 
-units::Force NewtonSecondLaw(units::Mass mass, units::Acceleration accel) {
+units::Force NewtonSecondLaw(units::Weight mass, units::Acceleration accel) {
   return mass * accel;
 }
 
@@ -26,7 +26,7 @@ units::Length AcceleratedMotion(units::Length initial, units::Speed v0, units::A
   return initial + v0 * t + a * t * t / 2.0;
 }
 
-units::Quantity<0, 1, 1> Momentum(units::Mass mass, units::Speed speed) {
+units::Quantity<0, 1, 1> Momentum(units::Weight mass, units::Speed speed) {
   return units::Quantity<0, 1, 1>{mass.value * speed.value};
 }
 

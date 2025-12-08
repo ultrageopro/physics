@@ -10,16 +10,16 @@ namespace physics::object {
 // По дефолту считаем, что объект находится на поверхности Земли
 class Object {
  public:
-  units::Mass mass = units::Mass{1.0};
+  units::Weight weight = units::Weight{1.0};
   vector::Vector<units::Length, 3> position{};
   vector::Vector<units::Speed, 3> speed{};
   vector::Vector<units::Acceleration, 3> acceleration{};
 
   Object() = default;
 
-  explicit Object(units::Mass mass, vector::Vector<units::Length, 3> position = {}, vector::Vector<units::Speed, 3> speed = {},
+  explicit Object(units::Weight mass, vector::Vector<units::Length, 3> position = {}, vector::Vector<units::Speed, 3> speed = {},
                   vector::Vector<units::Acceleration, 3> acceleration = vector::Vector<units::Acceleration, 3>{})
-      : mass(mass), position(position), speed(speed), acceleration(acceleration) {
+      : weight(mass), position(position), speed(speed), acceleration(acceleration) {
   }
 
   // Сила тяготения к поверхности (Масса)
