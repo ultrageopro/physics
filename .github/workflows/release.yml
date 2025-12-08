@@ -40,8 +40,6 @@ jobs:
         with:
           version: "latest"
 
-      # Отдельный C++ build можно вообще убрать — scikit-build-core сам всё соберёт при uv build.
-      # Но если хочешь, чтобы падало раньше именно на CMake, можно оставить:
       - name: Sanity build (CMake)
         run: |
           rm -rf build
