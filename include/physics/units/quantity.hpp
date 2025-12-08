@@ -27,6 +27,7 @@ constexpr double ScalarValue(const U& x) {
 
 // Операторы для вычисления величин
 // Определены для двух величин и для величины и числа
+// Очень еще удобно что умножение и сложение со скаляром некоммутативно потому что мне лень было определять левый операнд
 template <int T, int L, int M>
 constexpr Quantity<T, L, M> operator*(const Quantity<T, L, M>& left, double right) {
   return Quantity<T, L, M>{left.value * right};
