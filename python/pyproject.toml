@@ -1,6 +1,6 @@
 [project]
 name = "physics"
-version = "0.1.4"
+version = "0.1.5"
 description = "Package for physics written in C++"
 readme = "README.md"
 requires-python = ">=3.14"
@@ -8,8 +8,8 @@ dependencies = []
 authors = [{ name="UltraGeoPro", email="dev@ultrageopro.ru" }]
 
 [build-system]
-requires = ["setuptools", "wheel", "scikit-build-core>=0.10", "pybind11>=2.11"]
-build-backend = "setuptools.build_meta"
+requires = ["scikit-build-core>=0.10", "pybind11>=2.11"]
+build-backend = "scikit_build_core.build"
 
 [tool.scikit-build]
 wheel.packages = ["python/physics"]
