@@ -115,7 +115,7 @@ constexpr Vector<units::Quantity<0, 0, 0>, N> Normalize(const Vector<T, N>& v) {
   double len = units::ScalarValue(norm);
 
   for (std::size_t i = 0; i < N; ++i) {
-    result[i] = Dimensionless{units::ScalarValue(v[i]) / len};
+    result[i] = len != 0 ? Dimensionless{units::ScalarValue(v[i]) / len} : Dimensionless{0};
   }
 
   return result;

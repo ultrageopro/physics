@@ -51,24 +51,9 @@ units::Length Object::DistanceTo(const Object& other) const {
   return units::Length{std::sqrt(units::ScalarValue(squared))};
 }
 
-vector::Vector<units::Length, 3> Object::DirectionTo(const Object& other) const {
+vector::Vector<units::Quantity<0, 0, 0>, 3> Object::DirectionTo(const Object& other) const {
   auto diff = other.position - position;
-  auto norm = vector::Norm(diff);
-  double len = units::ScalarValue(norm);
-
-  if (len == 0.0) {
-    return vector::Vector<units::Length, 3>{
-        units::Length{0.0},
-        units::Length{0.0},
-        units::Length{0.0},
-    };
-  }
-
-  vector::Vector<units::Length, 3> result{};
-  for (std::size_t i = 0; i < 3; ++i) {
-    result[i] = units::Length{units::ScalarValue(diff[i]) / len};
-  }
-  return result;
+  return vector::Normalize(diff);
 }
 
 units::Force Object::GravitationalForceMagnitude(const Object& other) const {

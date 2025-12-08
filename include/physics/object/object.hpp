@@ -30,7 +30,7 @@ class Object {
 
   // Расстояние
   units::Length DistanceTo(const Object& other) const;
-  vector::Vector<units::Length, 3> DirectionTo(const Object& other) const;
+  vector::Vector<units::Quantity<0, 0, 0>, 3> DirectionTo(const Object& other) const;
 
   // Гравитационная сила
   units::Force GravitationalForceMagnitude(const Object& other) const;
