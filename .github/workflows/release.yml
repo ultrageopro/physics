@@ -53,7 +53,7 @@ jobs:
       - name: Upload wheel
         uses: actions/upload-artifact@v4
         with:
-          name: wheels
+          name: python-wheel-${{ runner.os }}
           path: python/dist/*.whl
 
   release:
