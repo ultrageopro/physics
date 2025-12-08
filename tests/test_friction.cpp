@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <cstddef>
 #include <physics/object/object.hpp>
 #include <physics/object/surface.hpp>
 #include <physics/constants.hpp>
@@ -19,6 +20,7 @@ TEST(SurfaceTest, MassBasicStandingObject) {
 
   auto normal = obj.Mass();
   double expected_n = 5.0 * pc::kEarthGravity.value;
+  auto x = NULL;
 
   EXPECT_DOUBLE_EQ(normal[2].value, expected_n);
 }
