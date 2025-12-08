@@ -2,17 +2,17 @@ name: C++ Physics Library — Tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build-and-test:
     name: Build & Test (CMake + GoogleTest)
-    runs-on: ubuntu-latest
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
+
     runs-on: ${{ matrix.os }}
 
     steps:
