@@ -1,3 +1,4 @@
+# .github/workflows/cpp-tests.yml
 name: C++ Physics Library — Tests
 
 on:
@@ -22,26 +23,26 @@ jobs:
       - name: Install dependencies (Linux)
         if: matrix.os == 'ubuntu-latest'
         run: |
-          sudo apt update
-          sudo apt install -y cmake ninja-build g++ clang
+          sudo apt-get update
+          sudo apt-get install -y cmake ninja-build python3-dev g++
 
       - name: Install dependencies (macOS)
         if: matrix.os == 'macos-latest'
         run: |
           brew update
-          brew install cmake ninja
+          brew install cmake ninja python
 
-      - name: Configure CMake
+      - name: Configure CMake (with tests)
         run: |
           cmake -S . -B build \
+            -DPHYSICS_BUILD_TESTS=ON \
             -DCMAKE_BUILD_TYPE=Debug \
-            -DCMAKE_CXX_COMPILER=clang++ \
             -G Ninja
 
       - name: Build
         run: cmake --build build --config Debug
 
-      - name: Run Tests
+      - name: Run tests
         run: |
           cd build
           ctest --output-on-failure

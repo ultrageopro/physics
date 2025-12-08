@@ -15,12 +15,16 @@ install(TARGETS core
     ARCHIVE DESTINATION physics
 )
 
-add_custom_command(
-    TARGET core
-    POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E env
-        PYTHONPATH=${PROJECT_SOURCE_DIR}/python
-        ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/python/scripts/generate_stubs.py
-    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-    COMMENT "Generating Python stub (_core.pyi)"
-)
+if(PHYSICS_GENERATE_STUBS)
+    find_package(Python3 COMPONENTS Interpreter REQUIRED)
+
+    add_custom_command(
+        TARGET core
+        POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E env
+            PYTHONPATH=${PROJECT_SOURCE_DIR}/python
+            ${Python3_EXECUTABLE} ${PROJECT_SOURCE_DIR}/python/scripts/generate_stubs.py
+        WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+        COMMENT "Generating Python stub (_core.pyi)"
+    )
+endif()

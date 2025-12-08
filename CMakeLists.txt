@@ -19,6 +19,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(pybind11)
 
 option(PHYSICS_BUILD_TESTS "Build C++ tests" ON)
+option(PHYSICS_GENERATE_STUBS "Generate Python stubs for bindings" OFF)
 
 add_library(physics
     src/physics/formulas/mech.cpp
@@ -39,7 +40,17 @@ install(DIRECTORY python/
 
 add_subdirectory(bindings)
 
+# Тесты
 if(PHYSICS_BUILD_TESTS)
-  enable_testing()
-  add_subdirectory(tests)
+    enable_testing()
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/tests)
+
+    FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+    )
+    FetchContent_MakeAvailable(googletest)
+
+    add_subdirectory(tests)
 endif()

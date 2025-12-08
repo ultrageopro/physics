@@ -18,7 +18,8 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           submodules: recursive
 
@@ -35,18 +36,21 @@ jobs:
           brew install cmake ninja python
 
       - name: Install uv
-        run: |
-          curl -LsSf https://astral.sh/uv/install.sh | sh
-          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: "latest"
 
-      - name: Build C++ extension
+      # Отдельный C++ build можно вообще убрать — scikit-build-core сам всё соберёт при uv build.
+      # Но если хочешь, чтобы падало раньше именно на CMake, можно оставить:
+      - name: Sanity build (CMake)
         run: |
           rm -rf build
           cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
           cmake --build build --config Release
 
-      - name: Build wheel
-        run: uv build
+      - name: Build wheel with uv
+        run: |
+          uv build
 
       - name: Upload wheel
         uses: actions/upload-artifact@v4

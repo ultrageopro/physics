@@ -18,7 +18,7 @@ TEST(SurfaceTest, MassBasicStandingObject) {
   po::Object obj(pu::Weight{5.0}, pv::Vector<pu::Length, 3>{{0.0_m, 0.0_m, 0.0_m}}, pv::Vector<pu::Speed, 3>{{0.0_ms, 0.0_ms, 0.0_ms}},
                  pv::Vector<pu::Acceleration, 3>{{0, 0, 0}});
 
-  auto normal = obj.GetMass();
+  auto normal = obj.Mass();
   double expected_n = 5.0 * pc::kEarthGravity.value;
   auto x = NULL;
 
@@ -65,7 +65,7 @@ TEST(SurfaceTest, MassZeroIfAccelerationIsUpwards) {
                  pv::Vector<pu::Speed, 3>{{pu::Speed{0}, pu::Speed{0}, pu::Speed{0}}},
                  pv::Vector<pu::Acceleration, 3>{{pu::Acceleration{0}, pu::Acceleration{0}, pu::Acceleration{pc::kEarthGravity}}});
 
-  auto normal = obj.GetMass();
+  auto normal = obj.Mass();
 
   EXPECT_DOUBLE_EQ(normal[0].value, 0.0);
   EXPECT_DOUBLE_EQ(normal[1].value, 0.0);
