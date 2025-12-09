@@ -25,7 +25,6 @@ void Simulator::ApplyGravity() {
     for (std::size_t j = i + 1; j < n; ++j) {
       auto fij = objects_[i].GravitationalForceVector(objects_[j]);
 
-      // применяем к i
       objects_[i].ApplyForce(fij);
 
       vector::Vector<units::Force, 3> fji{};
