@@ -20,7 +20,6 @@ TEST(SurfaceTest, MassBasicStandingObject) {
 
   auto normal = obj.Mass();
   double expected_n = 5.0 * pc::kEarthGravity.value;
-  auto x = NULL;
 
   EXPECT_DOUBLE_EQ(normal[2].value, expected_n);
 }
