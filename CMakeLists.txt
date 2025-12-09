@@ -25,6 +25,7 @@ add_library(physics
     src/physics/formulas/mech.cpp
     src/physics/object/object.cpp
     src/physics/formulas/gravity.cpp
+    src/physics/simulator/simulator.cpp
 )
 
 target_include_directories(physics PUBLIC

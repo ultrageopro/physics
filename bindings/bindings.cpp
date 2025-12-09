@@ -1,6 +1,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
+#include <physics/simulator/simulator.hpp>
 #include <physics/units/quantity.hpp>
 #include <physics/vector/vector.hpp>
 #include <physics/object/object.hpp>
@@ -61,7 +62,7 @@ void bind_vector(py::module_ &m, const std::string &name) {
            })
       .def("__add__", [](const Vec &a, const Vec &b) { return a + b; })
       .def("__sub__", [](const Vec &a, const Vec &b) { return a - b; })
-      .def("dot", &physics::vector::Dot<T, N>)
+      .def("dot", [](const Vec &a, const Vec &b) { return physics::vector::Dot(a, b); })
       .def("norm", &physics::vector::Norm<T, N>)
       .def("normalize", &physics::vector::Normalize<T, N>);
 }
@@ -78,6 +79,7 @@ void bind_quantities(py::module_ &m) {
   bind_quantity<physics::units::Acceleration>(m, "Acceleration");
   bind_quantity<physics::units::Force>(m, "Force");
   bind_quantity<physics::units::Energy>(m, "Energy");
+  bind_quantity<physics::units::Time>(m, "Time");
 
   m.def("scalar", &physics::units::ScalarValue<double>, "Extract raw value");
 }
@@ -101,10 +103,36 @@ void bind_object(py::module_ &m) {
 }
 
 void bind_mechanics(py::module_ &m) {
-  m.def("kinetic_energy", &physics::mech::KineticEnergy);
-  m.def("potential_energy", &physics::mech::PotentialEnergy);
-  m.def("work", &physics::mech::Work);
-  m.def("momentum", &physics::mech::Momentum);
+  using namespace physics::mech;
+
+  m.def("kinetic_energy", &KineticEnergy);
+  m.def("potential_energy", &PotentialEnergy);
+  m.def("newton_second_law", &NewtonSecondLaw);
+  m.def("average_speed", &AverageSpeed);
+  m.def("uniform_motion", &UniformMotion);
+  m.def("accelerated_motion", &AcceleratedMotion);
+  m.def("momentum", &Momentum);
+  m.def("work", &Work);
+  m.def("friction", &Friction);
+  m.def("static_friction_max", &StaticFrictionMax);
+  m.def("elastic_force", &ElasticForce);
+  m.def("elastic_potential_energy", &ElasticPotentialEnergy);
+}
+
+void bind_simulator(py::module_ &m) {
+  using physics::object::Object;
+  using physics::simulator::Simulator;
+  using physics::units::Length;
+  using physics::units::Time;
+
+  py::class_<Simulator>(m, "Simulator")
+      .def(py::init<>())
+      .def(py::init<Length>(), py::arg("collision_distance"))
+      .def(py::init<std::vector<Object>, Length>(), py::arg("objects"), py::arg("collision_distance"))
+      .def("step", &Simulator::Step, py::arg("dt"))
+      .def("objects", static_cast<std::vector<Object> &(Simulator::*)()>(&Simulator::Objects), py::return_value_policy::reference_internal)
+      .def("enable_gravity", &Simulator::EnableGravity, py::arg("enabled"))
+      .def("gravity_enabled", &Simulator::GravityEnabled);
 }
 
 PYBIND11_MODULE(_core, m) {
@@ -120,4 +148,5 @@ PYBIND11_MODULE(_core, m) {
 
   bind_mechanics(m);
   bind_object(m);
+  bind_simulator(m);
 }

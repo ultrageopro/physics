@@ -81,6 +81,7 @@ using Speed = Quantity<-1, 1, 0>;
 using Acceleration = Quantity<-2, 1, 0>;
 using Force = Quantity<-2, 1, 1>;
 using Energy = Quantity<-2, 2, 1>;
+using SpringConstant = Quantity<-2, 1, 1>;
 
 // Удобство для задания переменных суффиксами
 constexpr inline Time operator""_s(long double value) {

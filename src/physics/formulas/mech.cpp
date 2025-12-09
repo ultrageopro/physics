@@ -42,4 +42,12 @@ units::Force StaticFrictionMax(units::Quantity<0, 0, 0> static_coef, units::Forc
   return units::Force{static_coef.value * normal_force.value};
 }
 
+units::Force ElasticForce(units::Quantity<-2, 1, 1> k, units::Length x) {
+  return units::Force{k.value * x.value};
+}
+
+units::Energy ElasticPotentialEnergy(units::Quantity<-2, 1, 1> k, units::Length x) {
+  return units::Energy{0.5 * k.value * x.value * x.value};
+}
+
 }  // namespace physics::mech

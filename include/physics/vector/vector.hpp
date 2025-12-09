@@ -88,8 +88,8 @@ class Vector {
   }
 };
 
-template <typename T, std::size_t N>
-constexpr auto Dot(const Vector<T, N>& left, const Vector<T, N>& right) {
+template <typename T1, typename T2, std::size_t N>
+constexpr auto Dot(const Vector<T1, N>& left, const Vector<T2, N>& right) {
   using MulType = decltype(left[0] * right[0]);
   MulType sum{0.0};
 

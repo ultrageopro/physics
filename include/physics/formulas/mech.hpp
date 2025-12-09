@@ -24,4 +24,8 @@ units::Force Friction(units::Quantity<0, 0, 0> friction_coef, units::Force norma
 
 units::Force StaticFrictionMax(units::Quantity<0, 0, 0> static_coef, units::Force normal_force);
 
+units::Force ElasticForce(units::SpringConstant k, units::Length x);
+
+units::Energy ElasticPotentialEnergy(units::SpringConstant k, units::Length x);
+
 }  // namespace physics::mech
