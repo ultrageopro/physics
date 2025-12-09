@@ -36,6 +36,9 @@ class Simulator {
     objects_.push_back(obj);
   }
 
+  void HandleElasticCollision(object::Object& a, object::Object& b);
+  void HandleCollisions();
+
   void Step(units::Time dt);
 
  private:
@@ -43,10 +46,8 @@ class Simulator {
   bool use_gravity_ = true;
   units::Length collision_distance_{units::Length{0.0}};
 
-  void HandleElasticCollision(object::Object& a, object::Object& b);
   void ResetAccelerations();
   void ApplyGravity();
-  void HandleCollisions();
 };
 
 }  // namespace physics::simulator
